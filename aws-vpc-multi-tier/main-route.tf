@@ -5,7 +5,7 @@ resource "aws_route_table" "public-rtb" {
 
   route {
     cidr_block = var.cidr
-    gateway_id = aws_internet_gateway.internet-gateway-tf.id
+    gateway_id = aws_internet_gateway.igw-tf.id
   }
 
   tags = {
@@ -20,7 +20,7 @@ resource "aws_route_table" "private-rtb" {
 
   route {
     cidr_block     = var.cidr
-    nat_gateway_id = aws_nat_gateway.nat-gateway-tf.id
+    nat_gateway_id = aws_nat_gateway.nat-gw-tf.id
   }
 
   tags = {

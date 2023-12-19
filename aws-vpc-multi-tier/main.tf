@@ -5,7 +5,7 @@ resource "aws_vpc" "vpc-tf" {
   enable_dns_hostnames = var.true
 
   tags = {
-    Name = "terraform-vpc"
+    Name = "tf-vpc"
   }
 }
 
@@ -16,7 +16,7 @@ data "aws_availability_zones" "available-azs" {
 resource "aws_subnet" "public-subnet-tf" {
   for_each                = var.public_subnets
   vpc_id                  = aws_vpc.vpc-tf.id
-  cidr_block              = cidrsubnet(var.vpc_cidr, 8, each.value + 2)
+  cidr_block              = cidrsubnet(var.vpc_cidr, 8, each.value + 100)
   availability_zone       = tolist(data.aws_availability_zones.available-azs.names)[each.value - 1]
   map_public_ip_on_launch = var.true
 

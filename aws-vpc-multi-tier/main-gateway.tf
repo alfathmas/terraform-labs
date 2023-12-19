@@ -1,4 +1,4 @@
-resource "aws_internet_gateway" "internet-gateway-tf" {
+resource "aws_internet_gateway" "igw-tf" {
   vpc_id = aws_vpc.vpc-tf.id
 
   tags = {
@@ -6,18 +6,18 @@ resource "aws_internet_gateway" "internet-gateway-tf" {
   }
 }
 
-resource "aws_eip" "nat-gateway-eip-tf" {
-  vpc        = true
-  depends_on = [aws_internet_gateway.internet-gateway-tf]
+resource "aws_eip" "nat-gw-eip-tf" {
+  vpc         = true
+  depends_on  = [aws_internet_gateway.igw-tf]
 
   tags = {
     Name = "tf-nat-eip"
   }
 }
 
-resource "aws_nat_gateway" "nat-gateway-tf" {
+resource "aws_nat_gateway" "nat-gw-tf" {
   depends_on    = [aws_subnet.public-subnet-tf]
-  allocation_id = aws_eip.nat-gateway-eip-tf.id
+  allocation_id = aws_eip.nat-gw-eip-tf.id
   subnet_id     = aws_subnet.public-subnet-tf["public-subnet-1"].id
 
   tags = {
